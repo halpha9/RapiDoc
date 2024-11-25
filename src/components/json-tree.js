@@ -1,15 +1,15 @@
-import { LitElement, html, css } from "lit";
-import { copyToClipboard } from "~/utils/common-utils";
-import FontStyles from "~/styles/font-styles";
-import BorderStyles from "~/styles/border-styles";
-import InputStyles from "~/styles/input-styles";
-import CustomStyles from "~/styles/custom-styles";
+import { LitElement, html, css } from 'lit';
+import { copyToClipboard } from '~/utils/common-utils';
+import FontStyles from '~/styles/font-styles';
+import BorderStyles from '~/styles/border-styles';
+import InputStyles from '~/styles/input-styles';
+import CustomStyles from '~/styles/custom-styles';
 
 export default class JsonTree extends LitElement {
   static get properties() {
     return {
       data: { type: Object },
-      renderStyle: { type: String, attribute: "render-style" },
+      renderStyle: { type: String, attribute: 'render-style' },
     };
   }
 
@@ -116,7 +116,7 @@ export default class JsonTree extends LitElement {
       <div
         class="json-tree"
         @click="${(e) => {
-          if (e.target.classList.contains("btn-copy")) {
+          if (e.target.classList.contains('btn-copy')) {
             copyToClipboard(JSON.stringify(this.data, null, 2), e);
           } else {
             this.toggleExpand(e);
@@ -135,54 +135,54 @@ export default class JsonTree extends LitElement {
 
   generateTree(data, isLast = false) {
     if (data === null) {
-      return html`<span class="null">null</span>${isLast ? "" : ","}`;
+      return html`<span class="null">null</span>${isLast ? '' : ','}`;
     }
-    if (typeof data === "object" && data instanceof Date === false) {
-      const detailType = Array.isArray(data) ? "array" : "pure_object";
+    if (typeof data === 'object' && data instanceof Date === false) {
+      const detailType = Array.isArray(data) ? 'array' : 'pure_object';
       if (Object.keys(data).length === 0) {
-        return html`${Array.isArray(data) ? "[ ]," : "{ },"}`;
+        return html`${Array.isArray(data) ? '[ ],' : '{ },'}`;
       }
       return html`
         <div
-          class="open-bracket expanded ${detailType === "array"
-            ? "array"
-            : "object"}"
+          class="open-bracket expanded ${detailType === 'array'
+            ? 'array'
+            : 'object'}"
         >
-          ${detailType === "array" ? "[" : "{"}
+          ${detailType === 'array' ? '[' : '{'}
         </div>
         <div class="inside-bracket">
           ${Object.keys(data).map(
             (key, i, a) => html` <div class="item">
-              ${detailType === "pure_object" ? html`"${key}":` : ""}
+              ${detailType === 'pure_object' ? html`"${key}":` : ''}
               ${this.generateTree(data[key], i === a.length - 1)}
-            </div>`
+            </div>`,
           )}
         </div>
         <div class="close-bracket">
-          ${detailType === "array" ? "]" : "}"}${isLast ? "" : ","}
+          ${detailType === 'array' ? ']' : '}'}${isLast ? '' : ','}
         </div>
       `;
     }
-    return typeof data === "string" || data instanceof Date
-      ? html`<span class="${typeof data}">"${data}"</span>${isLast ? "" : ","}`
-      : html`<span class="${typeof data}">${data}</span>${isLast ? "" : ","}`;
+    return typeof data === 'string' || data instanceof Date
+      ? html`<span class="${typeof data}">"${data}"</span>${isLast ? '' : ','}`
+      : html`<span class="${typeof data}">${data}</span>${isLast ? '' : ','}`;
   }
   /* eslint-enable indent */
 
   toggleExpand(e) {
     const openBracketEl = e.target;
-    if (e.target.classList.contains("open-bracket")) {
-      if (openBracketEl.classList.contains("expanded")) {
-        openBracketEl.classList.replace("expanded", "collapsed");
-        e.target.innerHTML = e.target.classList.contains("array")
-          ? "[...]"
-          : "{...}";
+    if (e.target.classList.contains('open-bracket')) {
+      if (openBracketEl.classList.contains('expanded')) {
+        openBracketEl.classList.replace('expanded', 'collapsed');
+        e.target.innerHTML = e.target.classList.contains('array')
+          ? '[...]'
+          : '{...}';
       } else {
-        openBracketEl.classList.replace("collapsed", "expanded");
-        e.target.innerHTML = e.target.classList.contains("array") ? "[" : "{";
+        openBracketEl.classList.replace('collapsed', 'expanded');
+        e.target.innerHTML = e.target.classList.contains('array') ? '[' : '{';
       }
     }
   }
 }
 // Register the element with the browser
-customElements.define("json-tree", JsonTree);
+customElements.define('json-tree', JsonTree);

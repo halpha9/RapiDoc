@@ -40,6 +40,7 @@
     "marked": "4.3.0",
     "prismjs": "^1.29.0",
     "randexp": "^0.5.3",
+    "rapidoc": "git+https://github.com/halpha9/RapiDoc.git",
     "xml-but-prettier": "^1.0.1"
   },
   "scripts": {
